@@ -15,7 +15,8 @@ def main():
 
   for value in x_values_list:
     if handleY(value, a, b, c) == 0:
-      function_roots.append(value)
+      root = value
+      function_roots.append(root)
 
   #bg
   plt.figure(num=0,dpi=180)
@@ -32,7 +33,8 @@ def main():
   
   #root lines
   for index, root in enumerate(function_roots):
-    plt.axvline(x=root, color='b', label=f'root {index + 1}: {root}')
+    # plt.axvline(x=root, ymin=0.25, ymax=0.3, color='b', label=f'root {index + 1}: {root}')
+    plt.plot([root - 0.05, root + 0.05],[-10, 10], color='b', label=f'root {index + 1}: {root}')
     
   # names
   plt.title("Parallax Plots")
@@ -47,20 +49,23 @@ def handleY(x, a: int, b: int, c: int):
 
 
 def handle_user_input():
-  # expression = "1x²-2x-15"
   
-  expression = input("What's the expression? [ex.: x²-2x-15] ")
+  expression = input("What's the expression? [ex.: x²-2x-15]: ")
   
-  function_regex = "^([0-9]{1,2})?x²([+|-])([0-9])x([+|-])([0-9]{1,3})$"
+  function_regex = "^(-)?([0-9]{1,3})?x²([+|-][0-9]{1,3})x([+|-][0-9]{1,4})$"
   if matches := re.search(function_regex, expression):
     
-    if matches.group(1) == None:
+    if matches.group(1) and matches.group(2):
+      a = int(f"{matches.group(1)}{matches.group(2)}")
+    elif matches.group(1) and not matches.group(2):
+      a = -1
+    elif matches.group(2) and not matches.group(1):
+      a = int(matches.group(2))
+    elif not matches.group(1) and not matches.group(2):
       a = 1
-    else:
-      a = int(matches.group(1))
       
-    b = int(f"{matches.group(2)}{matches.group(3)}")
-    c = int(f"{matches.group(4)}{matches.group(5)}")
+    b = int(matches.group(3))
+    c = int(matches.group(4))
     
     print(f"a: {a} ; b: {b} ; c: {c}")
     
