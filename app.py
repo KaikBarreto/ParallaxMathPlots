@@ -23,9 +23,10 @@ def main():
   # function f(x)
   plt.plot(x_values_list, y_values_list, label=f"f(x): {expression}")
   # (+/-) areas
-  plt.axvspan(xmin=function_roots[0], xmax=function_roots[1], ymin=0, ymax=2, color='#ff0000', alpha=0.15)
-  plt.axvspan(xmin=function_roots[1], xmax=25, ymin=0, ymax=2, color='#00ff00', alpha=0.3)
-  plt.axvspan(xmin=-25, xmax=function_roots[0], ymin=0, ymax=2, color='#00ff00', alpha=0.3)
+  if len(function_roots) >= 2:
+    plt.axvspan(xmin=function_roots[0], xmax=function_roots[1], ymin=0, ymax=2, color='#ff0000', alpha=0.15)
+    plt.axvspan(xmin=function_roots[1], xmax=25, ymin=0, ymax=2, color='#00ff00', alpha=0.3)
+    plt.axvspan(xmin=-25, xmax=function_roots[0], ymin=0, ymax=2, color='#00ff00', alpha=0.3)
   # x axis
   plt.plot(x_values_list, x_values_list*0, "--g", label="eixo X")
   #y axis
@@ -34,7 +35,8 @@ def main():
   #root lines
   for index, root in enumerate(function_roots):
     # plt.axvline(x=root, ymin=0.25, ymax=0.3, color='b', label=f'root {index + 1}: {root}')
-    plt.plot([root - 0.05, root + 0.05],[-10, 10], color='b', label=f'root {index + 1}: {root}')
+    if root:
+      plt.plot([root - 0.05, root + 0.05],[-10, 10], color='b', label=f'root {index + 1}: {root}')
     
   # names
   plt.title("Parallax Plots")
@@ -52,7 +54,7 @@ def handle_user_input():
   
   expression = input("What's the expression? [ex.: x²-2x-15]: ")
   
-  function_regex = "^(-)?([0-9]{1,3})?x²([+|-][0-9]{1,3})x([+|-][0-9]{1,4})$"
+  function_regex = "^(-)?([0-9]{1,4})?x²([+|-][0-9]{1,4})x([+|-][0-9]{1,5})$"
   if matches := re.search(function_regex, expression):
     
     if matches.group(1) and matches.group(2):
