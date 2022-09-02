@@ -96,7 +96,7 @@ def secondGrade():
 
   function_roots = []
 
-  for value in x_values_list:
+  for value in np.arange(-200, 600.5, 1):
     if handleY(value, a, b, c) == 0:
       root = value
       function_roots.append(root)
@@ -107,9 +107,10 @@ def secondGrade():
   plt.plot(x_values_list, y_values_list, label=f"f(x): {expression}")
   # (+/-) areas
   if len(function_roots) >= 2:
-    plt.axvspan(xmin=function_roots[0], xmax=function_roots[1], ymin=0, ymax=2, color='#ff0000', alpha=0.15)
+    plt.axvspan(xmin=function_roots[0], xmax=function_roots[1], ymin=0, ymax=2, color='#ff0000', alpha=0.3)
     plt.axvspan(xmin=function_roots[1], xmax=25, ymin=0, ymax=2, color='#00ff00', alpha=0.3)
     plt.axvspan(xmin=-25, xmax=function_roots[0], ymin=0, ymax=2, color='#00ff00', alpha=0.3)
+  
   # x axis
   plt.plot(x_values_list, x_values_list*0, "--g", label="eixo X")
   #y axis
